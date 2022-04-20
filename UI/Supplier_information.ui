@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mainWindow</class>
+ <widget class="QMainWindow" name="mainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1026</width>
+    <height>689</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>供应商选择</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../main.qrc">
+    <normaloff>:/img/resource/supplier_icon.png</normaloff>:/img/resource/supplier_icon.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QHeaderView::section {background-color:#008CBA ; /* 蓝色 */
+                                                                color: WHITE;
+                                                                };
+                                                                text-align : center;</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>1001</width>
+      <height>671</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <item>
+        <widget class="QLabel" name="label_39">
+         <property name="text">
+          <string>供应商信息</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_14">
+         <item>
+          <widget class="QLabel" name="label_40">
+           <property name="text">
+            <string>供应商编号：</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="supplierid_supplier_2"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_41">
+           <property name="text">
+            <string>供应商名称:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="name_supplier_2"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="search_supplier_2">
+           <property name="text">
+            <string>搜索</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTableWidget" name="table_supplier_2">
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <column>
+          <property name="text">
+           <string>供应商编号</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>供应商姓名</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>供应商联系人</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>联系人电话</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>供应商地址</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>操作</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="Current_user">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>当前用户：xxxxx</string>
+   </property>
+   <property name="toolTip">
+    <string>当前用户：xxxxx</string>
+   </property>
+  </action>
+  <action name="Current_department">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>当前部门：xxxxx</string>
+   </property>
+  </action>
+  <action name="exit">
+   <property name="icon">
+    <iconset>
+     <normaloff>../resource/exit_icon.png</normaloff>../resource/exit_icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>退出</string>
+   </property>
+   <property name="visible">
+    <bool>true</bool>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::TextHeuristicRole</enum>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../main.qrc"/>
+ </resources>
+ <connections/>
+</ui>

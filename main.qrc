@@ -1,0 +1,30 @@
+<RCC>
+  <qresource prefix="img">
+    <file>resource/write.png</file>
+    <file>resource/customer_management.png</file>
+    <file>resource/dispatch_management.png</file>
+    <file>resource/sale_management.png</file>
+    <file>resource/add_icon.png</file>
+    <file>resource/customer_icon.png</file>
+    <file>resource/delete_icon.png</file>
+    <file>resource/exit_icon.png</file>
+    <file>resource/Goods_icon.png</file>
+    <file>resource/info_icon.png</file>
+    <file>resource/inventory_icon.png</file>
+    <file>resource/modify_icon.png</file>
+    <file>resource/outbound_icon.png</file>
+    <file>resource/purchase_icon.png</file>
+    <file>resource/sale_icon.png</file>
+    <file>resource/saleinfo_icon.png</file>
+    <file>resource/search_icon.png</file>
+    <file>resource/submit_icon.png</file>
+    <file>resource/supplier_icon.png</file>
+    <file>resource/warehouse_icon.png</file>
+  </qresource>
+  <qresource prefix="logo">
+    <file>resource/logo.png</file>
+  </qresource>
+  <qresource prefix="downarrow">
+    <file>resource/down-arrow.png</file>
+  </qresource>
+</RCC>

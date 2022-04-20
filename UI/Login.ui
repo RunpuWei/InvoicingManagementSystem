@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>474</width>
+    <height>682</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>医药进销存管理系统</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../main.qrc">
+    <normaloff>:/logo/resource/logo.png</normaloff>:/logo/resource/logo.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="frame_Shadow">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>452</width>
+      <height>660</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame{
+border:0px;
+ background: rgb(235, 235, 235);
+ border-radius: 10px;
+}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QFrame" name="frame_Object">
+       <property name="styleSheet">
+        <string notr="true">QFrame{
+border:0px;
+ background: none;
+}z</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QPushButton" name="pushButton_Login">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>570</y>
+          <width>131</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+	border-radius: 15px;
+	background-color: rgb(115, 176, 250);
+	color:#fff;
+	font-size:15px;
+}
+
+QPushButton:hover {
+    background-color: rgb(105, 112, 255);
+	border-radius: 15px;
+	border:1px solid rgb(105, 112, 255);
+}
+
+</string>
+        </property>
+        <property name="text">
+         <string>登录</string>
+        </property>
+        <property name="shortcut">
+         <string>Return</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="lbl_NewUser">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>510</y>
+          <width>111</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>微软雅黑</family>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel{
+	color:  rgb(115, 176, 250);
+}
+</string>
+        </property>
+        <property name="text">
+         <string>请选择部门：</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="lbl_UserLogin">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>300</y>
+          <width>241</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>微软雅黑</family>
+          <pointsize>-1</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel{
+color:rgb(115, 176, 250);
+font-size:23px;
+}</string>
+        </property>
+        <property name="text">
+         <string>医药进销存管理系统</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_Login">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>370</y>
+          <width>341</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>微软雅黑</family>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+    border: 1px solid rgb(238, 238, 236);
+    border-radius: 20px;
+    padding: 15px;
+    background-color: #fff;
+    color: rgb(115, 176, 250);
+}
+QLineEdit:hover {
+    border: 1px solid rgb(186, 189, 182);
+}
+QLineEdit:focus {
+    border: 1px solid   rgb(114, 159, 207);
+    color: rgb(100, 100, 100);
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="placeholderText">
+         <string>账号</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_Password">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>440</y>
+          <width>341</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>微软雅黑</family>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+    border: 1px solid rgb(238, 238, 236);
+    border-radius: 20px;
+    padding: 15px;
+    background-color: #fff;
+    color: rgb(115, 176, 250);
+}
+QLineEdit:hover {
+    border: 1px solid rgb(186, 189, 182);
+}
+QLineEdit:focus {
+    border: 1px solid   rgb(114, 159, 207);
+    color: rgb(100, 100, 100);
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>密码</string>
+        </property>
+       </widget>
+       <widget class="QFrame" name="frame_Logo">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>70</y>
+          <width>201</width>
+          <height>211</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QFrame{
+border:0px;
+ background: url(&quot;:/logo/resource/logo.png&quot;);
+  background-repeat: no-repeat;
+ border-radius: 10px;
+}
+</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="comboBox_department">
+        <property name="geometry">
+         <rect>
+          <x>166</x>
+          <y>510</y>
+          <width>231</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>微软雅黑</family>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QComboBox {
+    border: 1px solid rgb(238, 238, 236);
+    background-color: #fff;
+    border-radius: 15px;   /* 圆角 */
+    padding: 1px 18px 1px 3px;   /* 字体填衬 */
+    color: rgb(115, 176, 250);
+}
+QComboBox:hover {
+    border: 1px solid rgb(186, 189, 182);
+}
+QComboBox:focus {
+    border: 1px solid   rgb(114, 159, 207);
+    color: rgb(100, 100, 100);
+}
+/* 下拉箭头样式 */
+ QComboBox::down-arrow {
+　　width: 15px; /* 下拉箭头的宽度 */ 
+　　background: transparent; /* 下拉箭头的的背景色 */ 
+　　padding: 0px 0px 0px 0px; /* 上内边距、右内边距、下内边距、左内边距 */
+　　image: url(&quot;:/downarrow/resource/down-arrow.png&quot;);
+ } 
+</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>销售部门</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>仓库部门</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>采购部门</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QFrame" name="frame_TopBar">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>456</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>456</width>
+          <height>41</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>456</width>
+          <height>41</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>微软雅黑</family>
+         </font>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::RightToLeft</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QFrame{
+	background-color:rgb(208, 208, 208);
+}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QPushButton" name="pushButton_Exit">
+         <property name="geometry">
+          <rect>
+           <x>410</x>
+           <y>5</y>
+           <width>41</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>41</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::RightToLeft</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+	border-radius: 15px;
+	background-color:  rgb(115, 176, 250);
+	color:rgb(255, 255, 255)/*rgb(91, 91, 91)*/;
+	font-size:20px;
+	text-align:center;
+
+}
+QPushButton:hover {
+    background-color: rgb(105, 112, 255);
+}
+
+</string>
+         </property>
+         <property name="text">
+          <string notr="true">×</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="lbl_welcome">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>5</y>
+           <width>211</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>微软雅黑</family>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+
+color:  rgb(255, 255, 255)/*rgb(115, 176, 250)*/;
+
+}
+
+QLabel:hover {
+    color: rgb(115, 176, 250);
+}</string>
+         </property>
+         <property name="text">
+          <string>欢迎使用医药进销存管理系统</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../main.qrc"/>
+ </resources>
+ <connections/>
+</ui>
