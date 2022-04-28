@@ -53,7 +53,7 @@ class InvoiceSystem(QMainWindow, user_warehouse.Ui_mainWindow):  # 继承自Ui_m
 
     # 盘库 加载商品库存信息
     def kucun_research(self):
-        goodlist_temp= GoodsFuc.selectGoods()
+        goodlist_temp = GoodsFuc.selectGoods()
         self.goodlist = []
         for item in goodlist_temp:
             if item.get_isdelete() == 0:
@@ -278,7 +278,7 @@ class InvoiceSystem(QMainWindow, user_warehouse.Ui_mainWindow):  # 继承自Ui_m
     # 出库单查询
     def outbound_research(self):
         outboundlist = OutboundFuc.selectOutbound()
-
+        if outboundlist is None: outboundlist = []
         self.table_outboundinfo.setRowCount(len(outboundlist))  # 设置表格行数
         for index, item in enumerate(outboundlist, 0):
             manager = ManagerFuc.selectManagerByAccount(item.get_account_id())[0]
@@ -481,6 +481,8 @@ class InvoiceSystem(QMainWindow, user_warehouse.Ui_mainWindow):  # 继承自Ui_m
     def related_sale_click(self):
         self.dlg = salelist_win.win()
         salelist = SaleFuc.selectSale()
+        if salelist is None:
+            salelist = []
         self.dlg.table_saleinfo.setRowCount(len(salelist))  # 设置表格行数
         for index, item in enumerate(salelist, 0):
             butinfo_temp = QPushButton("确定")
@@ -509,7 +511,7 @@ class InvoiceSystem(QMainWindow, user_warehouse.Ui_mainWindow):  # 继承自Ui_m
                                             QTableWidgetItem(item.get_sale_date().strftime('%Y-%m-%d')))  # 订单日期
             self.dlg.table_saleinfo.setCellWidget(index, 4, widget)  # 操作
 
-            self.dlg.show()
+        self.dlg.show()
 
     # 设置工具栏上显示的当前用户和部门 还有 填写采购单 页面的部分空格（已完成）
     def setToolbarUserinfo(self):
@@ -530,10 +532,12 @@ class InvoiceSystem(QMainWindow, user_warehouse.Ui_mainWindow):  # 继承自Ui_m
         self.kucun_research()
 
         outboundlist = OutboundFuc.selectOutbound()
+        if outboundlist is None: outboundlist = []
         self.date_outbound.setText(time.strftime("%Y-%m-%d", time.localtime()))
         self.outid_outbound.setText("O" + str(int(time.strftime("%Y%m0000", time.localtime())) + len(outboundlist) + 1))
 
         inboundlist = InboundFuc.selectInbound()
+        if inboundlist is None: inboundlist = []
         self.date_inbound.setText(time.strftime("%Y-%m-%d", time.localtime()))
         self.inbound_id_inbound.setText(
             "I" + str(int(time.strftime("%Y%m0000", time.localtime())) + len(inboundlist) + 1))

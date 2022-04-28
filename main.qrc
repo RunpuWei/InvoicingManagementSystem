@@ -2,6 +2,11 @@
   <qresource prefix="img">
     <file>resource/write.png</file>
     <file>resource/customer_management.png</file>
+    <file>resource/purchase_icon.png</file>
+    <file>resource/inbound_icon.png</file>
+    <file>resource/inboundinfo_icon.png</file>
+    <file>resource/outbound_info.png</file>
+    <file>resource/outboundinfo_icon.png</file>
     <file>resource/dispatch_management.png</file>
     <file>resource/sale_management.png</file>
     <file>resource/add_icon.png</file>

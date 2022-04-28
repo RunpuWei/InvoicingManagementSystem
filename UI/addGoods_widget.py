@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(1050, 546)
+        Form.resize(1050, 558)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/img/resource/Goods_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Form.setWindowIcon(icon)

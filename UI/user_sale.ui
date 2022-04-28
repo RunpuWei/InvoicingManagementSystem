@@ -78,7 +78,7 @@
              <x>10</x>
              <y>0</y>
              <width>971</width>
-             <height>772</height>
+             <height>531</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout">
@@ -113,6 +113,12 @@
               </item>
               <item>
                <widget class="QPushButton" name="customer_add_sale">
+                <property name="minimumSize">
+                 <size>
+                  <width>130</width>
+                  <height>30</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>添加顾客信息</string>
                 </property>
@@ -434,6 +440,12 @@
               </item>
               <item>
                <widget class="QPushButton" name="search_saleinfo">
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>30</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>搜索</string>
                 </property>
@@ -561,6 +573,12 @@
               </item>
               <item>
                <widget class="QPushButton" name="linkbutton_dispatch">
+                <property name="minimumSize">
+                 <size>
+                  <width>130</width>
+                  <height>30</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>关联出库单</string>
                 </property>
@@ -615,7 +633,7 @@
                 <property name="minimumSize">
                  <size>
                   <width>100</width>
-                  <height>0</height>
+                  <height>30</height>
                  </size>
                 </property>
                 <property name="maximumSize">
@@ -811,6 +829,12 @@
               </item>
               <item>
                <widget class="QPushButton" name="search_user">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>30</height>
+                 </size>
+                </property>
                 <property name="maximumSize">
                  <size>
                   <width>100</width>
@@ -870,8 +894,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1031</width>
-            <height>521</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -1038,7 +1062,7 @@
                 <property name="minimumSize">
                  <size>
                   <width>130</width>
-                  <height>0</height>
+                  <height>30</height>
                  </size>
                 </property>
                 <property name="maximumSize">

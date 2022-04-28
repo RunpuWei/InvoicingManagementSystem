@@ -5,7 +5,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QWidget, QPushButton, QHBoxLayout, QTableWidgetItem, QSpinBox
 
 from UI import user_purchasing
-from func import OrderFuc, SupplierFuc, ManagerFuc, GoodsFuc, ReturnFuc
+from func import OrderFuc, SupplierFuc, ManagerFuc, GoodsFuc, ReturnFuc, DraftOrderFuc
 from user import widget_Supplier_win as supplier_win
 from user import widget_Orderinfo_win as orderinfo_win
 from user import widget_Goods_win as goods_win
@@ -27,6 +27,7 @@ class InvoiceSystem(QMainWindow, user_purchasing.Ui_mainWindow):  # 继承自Ui_
         self.statusbar.showMessage('登陆成功！', 3000)  # 信息显示3秒
         self.manager = manager
         self.setToolbarUserinfo()
+        self.reload()
         # self.tabWidget.currentChanged.connect()
         self.order_submit.clicked.connect(self.Order_submit_click)
         self.Box_purchasing.currentChanged.connect(self.Box_purchasing_changed)
@@ -65,6 +66,84 @@ class InvoiceSystem(QMainWindow, user_purchasing.Ui_mainWindow):  # 继承自Ui_
     # 一级页面切换（弃用）
     def tabchange(self):
         index = self.tabWidget.currentIndex()
+
+    # 采购管理——暂存采购单查询
+    def draftOrder_research(self):
+        draftorder_list = DraftOrderFuc.selectDraftOrder()
+        for item in draftorder_list:
+            if item.get_isdelete() == 1 or item.get_isfinish() == 1:  #
+                continue
+            currentcount = self.table_draftOrder.rowCount()
+            self.table_draftOrder.setRowCount(currentcount + 1)  # 设置表格行数+1
+
+            butinfo_addtemp = QPushButton("接受")
+            butinfo_addtemp.setDown(True)
+            butinfo_addtemp.setStyleSheet(''' text-align : center;
+                                              border: 2px solid #e7e7e7;
+                                              height : 30px;
+                                              border-top:1px solid #eee;
+                                              font : 13px;''')
+            butinfo_addtemp.setIcon(QIcon(':/img/resource/add_icon.png'))
+            butinfo_addtemp.draftorder_id = item.get_draftorder_id()
+            butinfo_addtemp.clicked.connect(self.draftOrder_setfinished)
+
+            butinfo_deletetemp = QPushButton("拒绝")
+            butinfo_deletetemp.setDown(True)
+            butinfo_deletetemp.setStyleSheet(''' text-align : center;
+                                              border: 2px solid #e7e7e7;
+                                              height : 30px;
+                                              border-top:1px solid #eee;
+                                              font : 13px;''')
+            butinfo_deletetemp.setIcon(QIcon(':/img/resource/delete_icon.png'))
+            butinfo_deletetemp.draftorder_id = item.get_draftorder_id()
+            butinfo_deletetemp.clicked.connect(self.draftOrder_setdelete)
+
+            widget = QWidget()
+            hLayout = QHBoxLayout()
+            hLayout.addWidget(butinfo_addtemp)
+            hLayout.addWidget(butinfo_deletetemp)
+            hLayout.setContentsMargins(5, 2, 5, 2)
+            widget.setLayout(hLayout)
+
+            goods = GoodsFuc.selectGoodsByGoodsId(item.get_goods_id())[0]
+            supplier = SupplierFuc.selectSupplierBySupplierId(item.get_supplier_id())[0]
+            manager = ManagerFuc.selectManagerByAccount(item.get_account_id())[0]
+
+            self.table_draftOrder.setItem(currentcount, 0, QTableWidgetItem(item.get_draftorder_id()))  # 暂存订货单编号
+            self.table_draftOrder.setItem(currentcount, 1, QTableWidgetItem(item.get_sale_id()))  # 关联销售单编号
+            self.table_draftOrder.setItem(currentcount, 2, QTableWidgetItem(
+                "%s/%s" % (goods.get_GoodsName(), goods.getGoods_id())))  # 商品名/商品ID
+            self.table_draftOrder.setItem(currentcount, 3, QTableWidgetItem(str(item.get_order_num())+goods.get_GoodsUnit()))  # 订货数量
+            self.table_draftOrder.setItem(currentcount, 4, QTableWidgetItem(
+                "%s/%s" % (supplier.get_supplier_name(), supplier.get_supplier_id())))  # 供应商名/供应商ID
+            self.table_draftOrder.setItem(currentcount, 5, QTableWidgetItem(manager.getEmployee_name()))  # 负责人
+            self.table_draftOrder.setItem(currentcount, 6,
+                                          QTableWidgetItem(item.get_date().strftime('%Y-%m-%d')))  # 库存数量
+            self.table_draftOrder.setCellWidget(currentcount, 7, widget)  # 操作
+
+    # 采购管理——删除暂存采购单
+    def draftOrder_setdelete(self):
+        source = self.sender()
+        if source:
+            draftorder_id = source.draftorder_id
+            for row in range(self.table_draftOrder.rowCount()):
+                if self.table_draftOrder.item(row, 0).text() == draftorder_id:
+                    DraftOrderFuc.deletedraftorder(draftorder_id)
+                    self.table_draftOrder.removeRow(row)
+                    QMessageBox.information(self, '提醒', '暂存采购单' + draftorder_id + '拒绝成功！', QMessageBox.Yes)
+                    break
+
+    # 采购管理——完成暂存采购单
+    def draftOrder_setfinished(self):
+        source = self.sender()
+        if source:
+            draftorder_id = source.draftorder_id
+            for row in range(self.table_draftOrder.rowCount()):
+                if self.table_draftOrder.item(row, 0).text() == draftorder_id:
+                    DraftOrderFuc.setDraftOrderfinished(draftorder_id)
+                    self.table_draftOrder.removeRow(row)
+                    QMessageBox.information(self, '提醒', '暂存采购单' + draftorder_id + '接受成功！', QMessageBox.Yes)
+                    break
 
     # 商品管理按下选择供应商按钮（已完成）
     def supplier_choose_click(self):
@@ -373,18 +452,22 @@ class InvoiceSystem(QMainWindow, user_purchasing.Ui_mainWindow):  # 继承自Ui_
         self.supplier_research()
 
         orderlist = OrderFuc.selectOrder()
+        if orderlist is None: orderlist = []
         self.order_date.setText(time.strftime("%Y-%m-%d", time.localtime()))
         self.order_id_order_2.setText("B" + str(int(time.strftime("%Y%m0000", time.localtime())) + len(orderlist) + 1))
 
         returnList = ReturnFuc.selectReturn()
+        if returnList is None: returnList = []
         self.lineEdit_18.setText(time.strftime("%Y-%m-%d", time.localtime()))
         self.return_id_return.setText("R" + str(int(time.strftime("%Y%m0000", time.localtime())) + len(returnList) + 1))
 
         goods_list = GoodsFuc.selectGoods()
+        if goods_list is None: goods_list = []
         newgoodsid = "P" + str(len(goods_list) + 1).rjust(4, '0')
         self.goodsid_goods_add.setText(newgoodsid)
 
         supplier_list = SupplierFuc.selectSupplier()
+        if supplier_list is None: supplier_list = []
         newsupplierid = "G" + str(len(supplier_list) + 1).rjust(4, '0')
         self.supplierid_supplier_add.setText(newsupplierid)
 
@@ -418,7 +501,7 @@ class InvoiceSystem(QMainWindow, user_purchasing.Ui_mainWindow):  # 继承自Ui_
 
     # 采购——添加商品按钮（已做完）
     def purchase_addgoods(self):
-        if self.supplier_id.text()=='':
+        if self.supplier_id.text() == '':
             QMessageBox.warning(self, '警告', '请先选择供应商！', QMessageBox.Yes)
             return None
         goods = GoodsFuc.selectGoodsBySupplierId(self.supplier_id.text())
@@ -522,7 +605,7 @@ class InvoiceSystem(QMainWindow, user_purchasing.Ui_mainWindow):  # 继承自Ui_
         # 创建输入框
         # 创建spinBox
         spinBox = QSpinBox()
-        spinBox.setRange(0, 999999)
+        spinBox.setRange(1, 999999)
         spinBox.setSingleStep(1)
         spinBox.valueChanged.connect(self.purchase_setgoodsnum)
         spinBox.goodsid = goodsid
@@ -551,7 +634,6 @@ class InvoiceSystem(QMainWindow, user_purchasing.Ui_mainWindow):  # 继承自Ui_
         self.Current_department.setText("当前部门：" + department)
         self.employee_name.setText(userid)
         self.employee_name_2.setText(userid)
-        self.reload()
 
     # 添加供应商 获取选中的供应商（已完成）
     def getchosenSupplier(self):
@@ -612,9 +694,10 @@ class InvoiceSystem(QMainWindow, user_purchasing.Ui_mainWindow):  # 继承自Ui_
     def Box_purchasing_changed(self):
         if self.Box_purchasing.currentIndex() == 0:  # 切换成了填写采购单页
             print("切换成了填写采购单页")
-        else:
+        elif self.Box_purchasing.currentIndex() == 1:
             # 采购管理——采购单查询
             orderinfo = OrderFuc.selectOrder()
+            if orderinfo is None: orderinfo = []
             self.table_orderinfo.setRowCount(len(orderinfo))  # 设置表格行数
 
             self.but_info = []
@@ -654,6 +737,9 @@ class InvoiceSystem(QMainWindow, user_purchasing.Ui_mainWindow):  # 继承自Ui_
             print(orderinfo)
 
             print("切换成了采购单查询页")
+
+        elif self.Box_purchasing.currentIndex() == 2:
+            self.draftOrder_research()
 
     # 按下添加供应商按钮（已完成）
     def supplier_add_click(self):

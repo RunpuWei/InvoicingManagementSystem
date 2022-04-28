@@ -17,7 +17,7 @@ def insertDispatch(dispatch):
 
 # 查询全部发货单
 def selectDispatch():
-    sql = "SELECT DISTINCT disp_id,account,account,disp_date FROM tb_dispatch "
+    sql = "SELECT DISTINCT disp_id,account,out_id,disp_date FROM tb_dispatch "
     conn = db.MyDbUtil()
     result = conn.query_sql(sql)
     conn.close_db()

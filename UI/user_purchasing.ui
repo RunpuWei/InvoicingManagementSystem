@@ -34,6 +34,10 @@
         <number>0</number>
        </property>
        <widget class="QWidget" name="purchasing">
+        <attribute name="icon">
+         <iconset resource="../main.qrc">
+          <normaloff>:/img/resource/purchase_icon.png</normaloff>:/img/resource/purchase_icon.png</iconset>
+        </attribute>
         <attribute name="title">
          <string>采购管理</string>
         </attribute>
@@ -49,15 +53,19 @@
          <property name="currentIndex">
           <number>0</number>
          </property>
-         <widget class="QWidget" name="tb_order">
+         <widget class="QWidget" name="tb_order_2">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
             <width>991</width>
-            <height>531</height>
+            <height>486</height>
            </rect>
           </property>
+          <attribute name="icon">
+           <iconset resource="../main.qrc">
+            <normaloff>:/img/resource/write.png</normaloff>:/img/resource/write.png</iconset>
+          </attribute>
           <attribute name="label">
            <string>填写采购单</string>
           </attribute>
@@ -67,7 +75,7 @@
              <x>10</x>
              <y>0</y>
              <width>971</width>
-             <height>531</height>
+             <height>481</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout">
@@ -148,6 +156,12 @@
               </item>
               <item>
                <widget class="QPushButton" name="supplier_add">
+                <property name="minimumSize">
+                 <size>
+                  <width>140</width>
+                  <height>30</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>添加供应商信息</string>
                 </property>
@@ -339,9 +353,13 @@
             <x>0</x>
             <y>0</y>
             <width>991</width>
-            <height>531</height>
+            <height>486</height>
            </rect>
           </property>
+          <attribute name="icon">
+           <iconset resource="../main.qrc">
+            <normaloff>:/img/resource/search_icon.png</normaloff>:/img/resource/search_icon.png</iconset>
+          </attribute>
           <attribute name="label">
            <string>采购单查询</string>
           </attribute>
@@ -351,7 +369,7 @@
              <x>10</x>
              <y>0</y>
              <width>971</width>
-             <height>521</height>
+             <height>481</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -483,9 +501,182 @@
            </layout>
           </widget>
          </widget>
+         <widget class="QWidget" name="tb_DraftOrder">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>991</width>
+            <height>486</height>
+           </rect>
+          </property>
+          <attribute name="icon">
+           <iconset resource="../main.qrc">
+            <normaloff>:/img/resource/search_icon.png</normaloff>:/img/resource/search_icon.png</iconset>
+          </attribute>
+          <attribute name="label">
+           <string>暂存采购单查询</string>
+          </attribute>
+          <widget class="QWidget" name="layoutWidget_2">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>0</y>
+             <width>971</width>
+             <height>481</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <item>
+             <widget class="QLabel" name="label_21">
+              <property name="text">
+               <string>暂存采购单查询</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_7">
+              <item>
+               <widget class="QLabel" name="label_22">
+                <property name="text">
+                 <string>订单编号：</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="order_id_draftOrder"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_23">
+                <property name="text">
+                 <string>供应商编号：</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="supplier_id_draftOrder"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_24">
+                <property name="text">
+                 <string>订单时间：</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="ordertime_draftOrder">
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>无</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>3天内</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>一周内</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>一个月内</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="search_draftOrder">
+                <property name="text">
+                 <string>搜索</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="table_draftOrder">
+              <property name="styleSheet">
+               <string notr="true">QHeaderView::section {background-color:#008CBA ; /* 蓝色 */
+                                                                color: WHITE;
+                                                                };
+                                                                text-align : center;</string>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <column>
+               <property name="text">
+                <string>暂存采购单编号</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>关联销售单编号</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>商品名（ID）</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>订货数量</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>供应商（ID）</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>负责人</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>订单日期</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>操作</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
         </widget>
        </widget>
        <widget class="QWidget" name="returns">
+        <attribute name="icon">
+         <iconset resource="../main.qrc">
+          <normaloff>:/img/resource/dispatch_management.png</normaloff>:/img/resource/dispatch_management.png</iconset>
+        </attribute>
         <attribute name="title">
          <string>退货管理</string>
         </attribute>
@@ -507,9 +698,13 @@
             <x>0</x>
             <y>0</y>
             <width>1031</width>
-            <height>561</height>
+            <height>556</height>
            </rect>
           </property>
+          <attribute name="icon">
+           <iconset resource="../main.qrc">
+            <normaloff>:/img/resource/write.png</normaloff>:/img/resource/write.png</iconset>
+          </attribute>
           <attribute name="label">
            <string>填写退货单</string>
           </attribute>
@@ -519,7 +714,7 @@
              <x>10</x>
              <y>10</y>
              <width>971</width>
-             <height>551</height>
+             <height>541</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -690,6 +885,10 @@
         </widget>
        </widget>
        <widget class="QWidget" name="goods">
+        <attribute name="icon">
+         <iconset resource="../main.qrc">
+          <normaloff>:/img/resource/Goods_icon.png</normaloff>:/img/resource/Goods_icon.png</iconset>
+        </attribute>
         <attribute name="title">
          <string>商品管理</string>
         </attribute>
@@ -711,9 +910,13 @@
             <x>0</x>
             <y>0</y>
             <width>1031</width>
-            <height>531</height>
+            <height>521</height>
            </rect>
           </property>
+          <attribute name="icon">
+           <iconset resource="../main.qrc">
+            <normaloff>:/img/resource/Goods_icon.png</normaloff>:/img/resource/Goods_icon.png</iconset>
+          </attribute>
           <attribute name="label">
            <string>商品查询</string>
           </attribute>
@@ -874,9 +1077,13 @@
             <x>0</x>
             <y>0</y>
             <width>1031</width>
-            <height>531</height>
+            <height>521</height>
            </rect>
           </property>
+          <attribute name="icon">
+           <iconset resource="../main.qrc">
+            <normaloff>:/img/resource/add_icon.png</normaloff>:/img/resource/add_icon.png</iconset>
+          </attribute>
           <attribute name="label">
            <string>添加商品信息</string>
           </attribute>
@@ -1161,6 +1368,10 @@
         </widget>
        </widget>
        <widget class="QWidget" name="supplier">
+        <attribute name="icon">
+         <iconset resource="../main.qrc">
+          <normaloff>:/img/resource/supplier_icon.png</normaloff>:/img/resource/supplier_icon.png</iconset>
+        </attribute>
         <attribute name="title">
          <string>供应商管理</string>
         </attribute>
@@ -1182,9 +1393,13 @@
             <x>0</x>
             <y>0</y>
             <width>1031</width>
-            <height>531</height>
+            <height>521</height>
            </rect>
           </property>
+          <attribute name="icon">
+           <iconset resource="../main.qrc">
+            <normaloff>:/img/resource/supplier_icon.png</normaloff>:/img/resource/supplier_icon.png</iconset>
+          </attribute>
           <attribute name="label">
            <string>供应商查询</string>
           </attribute>
@@ -1297,9 +1512,13 @@
             <x>0</x>
             <y>0</y>
             <width>1031</width>
-            <height>531</height>
+            <height>521</height>
            </rect>
           </property>
+          <attribute name="icon">
+           <iconset resource="../main.qrc">
+            <normaloff>:/img/resource/add_icon.png</normaloff>:/img/resource/add_icon.png</iconset>
+          </attribute>
           <attribute name="label">
            <string>添加供应商信息</string>
           </attribute>
@@ -1309,7 +1528,7 @@
              <x>10</x>
              <y>0</y>
              <width>981</width>
-             <height>531</height>
+             <height>521</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_9">

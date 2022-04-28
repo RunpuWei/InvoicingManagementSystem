@@ -34,6 +34,10 @@
         <number>0</number>
        </property>
        <widget class="QWidget" name="outbound">
+        <attribute name="icon">
+         <iconset resource="../main.qrc">
+          <normaloff>:/img/resource/outbound_info.png</normaloff>:/img/resource/outbound_info.png</iconset>
+        </attribute>
         <attribute name="title">
          <string>出库管理</string>
         </attribute>
@@ -55,9 +59,13 @@
             <x>0</x>
             <y>0</y>
             <width>991</width>
-            <height>551</height>
+            <height>541</height>
            </rect>
           </property>
+          <attribute name="icon">
+           <iconset resource="../main.qrc">
+            <normaloff>:/img/resource/outboundinfo_icon.png</normaloff>:/img/resource/outboundinfo_icon.png</iconset>
+          </attribute>
           <attribute name="label">
            <string>出库</string>
           </attribute>
@@ -67,7 +75,7 @@
              <x>10</x>
              <y>0</y>
              <width>971</width>
-             <height>551</height>
+             <height>531</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout">
@@ -102,6 +110,12 @@
               </item>
               <item>
                <widget class="QPushButton" name="related_sale_outbound">
+                <property name="minimumSize">
+                 <size>
+                  <width>130</width>
+                  <height>30</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>关联销售单</string>
                 </property>
@@ -252,9 +266,13 @@
             <x>0</x>
             <y>0</y>
             <width>991</width>
-            <height>551</height>
+            <height>541</height>
            </rect>
           </property>
+          <attribute name="icon">
+           <iconset resource="../main.qrc">
+            <normaloff>:/img/resource/search_icon.png</normaloff>:/img/resource/search_icon.png</iconset>
+          </attribute>
           <attribute name="label">
            <string>出库单查询</string>
           </attribute>
@@ -264,7 +282,7 @@
              <x>10</x>
              <y>0</y>
              <width>971</width>
-             <height>551</height>
+             <height>531</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -321,6 +339,12 @@
               </item>
               <item>
                <widget class="QPushButton" name="search_outbound">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>30</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>搜索</string>
                 </property>
@@ -372,6 +396,10 @@
         </widget>
        </widget>
        <widget class="QWidget" name="inbound">
+        <attribute name="icon">
+         <iconset resource="../main.qrc">
+          <normaloff>:/img/resource/inbound_icon.png</normaloff>:/img/resource/inbound_icon.png</iconset>
+        </attribute>
         <attribute name="title">
          <string>入库管理</string>
         </attribute>
@@ -393,9 +421,13 @@
             <x>0</x>
             <y>0</y>
             <width>1031</width>
-            <height>581</height>
+            <height>576</height>
            </rect>
           </property>
+          <attribute name="icon">
+           <iconset resource="../main.qrc">
+            <normaloff>:/img/resource/inboundinfo_icon.png</normaloff>:/img/resource/inboundinfo_icon.png</iconset>
+          </attribute>
           <attribute name="label">
            <string>入库</string>
           </attribute>
@@ -405,7 +437,7 @@
              <x>10</x>
              <y>10</y>
              <width>971</width>
-             <height>571</height>
+             <height>551</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -440,6 +472,12 @@
               </item>
               <item>
                <widget class="QPushButton" name="but_purchasing_inbound">
+                <property name="minimumSize">
+                 <size>
+                  <width>130</width>
+                  <height>30</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>关联采购单</string>
                 </property>
@@ -578,6 +616,10 @@
         </widget>
        </widget>
        <widget class="QWidget" name="kucun">
+        <attribute name="icon">
+         <iconset resource="../main.qrc">
+          <normaloff>:/img/resource/modify_icon.png</normaloff>:/img/resource/modify_icon.png</iconset>
+        </attribute>
         <attribute name="title">
          <string>库存管理</string>
         </attribute>
@@ -599,9 +641,13 @@
             <x>0</x>
             <y>0</y>
             <width>1031</width>
-            <height>581</height>
+            <height>576</height>
            </rect>
           </property>
+          <attribute name="icon">
+           <iconset resource="../main.qrc">
+            <normaloff>:/img/resource/write.png</normaloff>:/img/resource/write.png</iconset>
+          </attribute>
           <attribute name="label">
            <string>盘库</string>
           </attribute>
@@ -611,7 +657,7 @@
              <x>10</x>
              <y>0</y>
              <width>971</width>
-             <height>581</height>
+             <height>561</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -681,6 +727,12 @@
               </item>
               <item>
                <widget class="QPushButton" name="search_kucun">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>30</height>
+                 </size>
+                </property>
                 <property name="maximumSize">
                  <size>
                   <width>100</width>

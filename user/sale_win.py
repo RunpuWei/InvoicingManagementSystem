@@ -5,13 +5,14 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QWidget, QPushButton, QHBoxLayout, QTableWidgetItem, QSpinBox
 
 from UI import user_sale
-from func import SupplierFuc, ManagerFuc, GoodsFuc, SaleFuc, DispatchFuc, CustomerFuc, OutboundFuc
+from func import SupplierFuc, ManagerFuc, GoodsFuc, SaleFuc, DispatchFuc, CustomerFuc, OutboundFuc, DraftOrderFuc
 from user import widget_Goods_win as goods_win
 from user import widget_Saleinfo_win as saleinfo_win
 from user import widget_Customerinfo_win as customerinfo_win
 from user import widget_Outboundlist as outboundlist_win
 from vo.Customer import Customer
 from vo.Dispatch import Dispatch
+from vo.DraftOrder import DraftOrder
 from vo.Manager import Manager
 from vo.Sale import Sale
 import sys
@@ -52,7 +53,8 @@ class InvoiceSystem(QMainWindow, user_sale.Ui_mainWindow):  # 继承自Ui_mainWi
             QMessageBox.warning(self, '警告', '内容没有填写完整，请填写完整后再提交！', QMessageBox.Yes)
             return None
 
-        if OutboundFuc.updateOutboundFlagtoDelivered(self.outid.text()) and DispatchFuc.insertDispatch(Dispatch(disp_id, account_id, outid, disp_date)):
+        if OutboundFuc.updateOutboundFlagtoDelivered(self.outid.text()) and DispatchFuc.insertDispatch(
+                Dispatch(disp_id, account_id, outid, disp_date)):
             QMessageBox.information(self, '提醒', '出库单' + outid + '发货成功！', QMessageBox.Yes)
             self.dispatch_id_dispatch.setText("")
             self.table_dispatch.setRowCount(0)
@@ -86,13 +88,17 @@ class InvoiceSystem(QMainWindow, user_sale.Ui_mainWindow):  # 继承自Ui_mainWi
                     self.table_dispatch.setItem(index, 3, QTableWidgetItem(str(sale.get_sale_number())))  # 售出数量
                     self.table_dispatch.setItem(index, 4, QTableWidgetItem(good.get_GoodsUnit()))  # 商品单位
                     self.table_dispatch.setItem(index, 5, QTableWidgetItem(good.getPrice_sell()))  # 商品售价
-                    self.table_dispatch.setItem(index, 6, QTableWidgetItem(str(sale.get_sale_number()*int(good.getPrice_sell()))))  # 商品编号
+                    self.table_dispatch.setItem(index, 6, QTableWidgetItem(
+                        str(sale.get_sale_number() * int(good.getPrice_sell()))))  # 商品编号
                     break
 
     # 发货单——关联出库单
     def link_outbound(self):
         self.dlg = outboundlist_win.win()
         outboundlist = OutboundFuc.selectOutbound()
+        if outboundlist is None:
+            QMessageBox.warning(self, '警告', '出库单暂时为空，请联系仓库部门！', QMessageBox.Yes)
+            return
         self.dlg.table_outboundinfo.setRowCount(len(outboundlist))  # 设置表格行数
 
         for index, item in enumerate(outboundlist, 0):
@@ -194,7 +200,10 @@ class InvoiceSystem(QMainWindow, user_sale.Ui_mainWindow):  # 继承自Ui_mainWi
         if rowCount == 0:
             QMessageBox.warning(self, '警告', '你好像还没有添加商品哦！', QMessageBox.Yes)
             return None
-        if len(self.order_id_sale.text())*len(self.customer_ID_sale.text())*len(self.customer_name_sale.text())*len(self.customer_phone_sale.text())*len(self.customer_address_sale.text())*len(self.currentUser_sale.text())*len(self.date_sale.text()) == 0:
+        if len(self.order_id_sale.text()) * len(self.customer_ID_sale.text()) * len(
+                self.customer_name_sale.text()) * len(self.customer_phone_sale.text()) * len(
+            self.customer_address_sale.text()) * len(self.currentUser_sale.text()) * len(
+            self.date_sale.text()) == 0:
             QMessageBox.warning(self, '警告', '你好像还没有选择顾客信息哦！', QMessageBox.Yes)
             return None
 
@@ -202,8 +211,32 @@ class InvoiceSystem(QMainWindow, user_sale.Ui_mainWindow):  # 继承自Ui_mainWi
         account = self.manager.getAccount()
         customerid = self.customer_ID_sale.text()
         for row in range(rowCount):
-            salenumber = int(self.table_sale.item(row, 6).text()) / int(self.table_sale.item(row, 5).text())
+            # 自动生成暂存采购单并提交
+            def DraftOrdersubmit(sale_id, goods_id, order_num, supplier_id, account_id):
+                draftorderlist = DraftOrderFuc.selectDraftOrder()
+                if draftorderlist is None: draftorderlist = []
+                date = time.strftime("%Y-%m-%d", time.localtime())
+                draftorder_id = "DB" + str(int(time.strftime("%Y%m0000", time.localtime())) + len(draftorderlist) + 1)
+                good = GoodsFuc.selectGoodsByGoodsId(goods_id)[0]
+                reply = QMessageBox.question(self, '提醒', "商品\"%s\"库存不足，是否自动生成暂存订货单（订单号：\"%s\"，采购数量：\"%d\"）并提交至采购部门。" % (
+                    good.get_GoodsName(), draftorder_id, order_num),
+                                             QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+                if reply == QMessageBox.Yes:
+                    print('按下了确认键')
+                    DraftOrderFuc.insertDraftOrder(
+                        DraftOrder(draftorder_id, sale_id, goods_id, order_num, supplier_id, account_id, date))
+                    return True
+                else:
+                    print('按下了取消键')
+                    return False
+
+            salenumber = int(int(self.table_sale.item(row, 6).text()) / int(self.table_sale.item(row, 5).text()))
             goodsid = self.table_sale.item(row, 0).text()
+            goods = GoodsFuc.selectGoodsByGoodsId(goodsid)[0]
+            if salenumber > goods.getGoods_number():  # 库存不足，需要暂存采购单
+                if DraftOrdersubmit(saleid, goodsid, salenumber - goods.getGoods_number(), goods.getSupplier_id(), account) is False:
+                    continue
+
             SaleFuc.insertSale(Sale(sale_id=saleid, account_id=account, customer_id=customerid,
                                     sale_date=time.strftime("%Y-%m-%d", time.localtime()), goods_id=goodsid,
                                     sale_number=salenumber, sale_left=salenumber, sale_flag="未出库"))
@@ -211,6 +244,8 @@ class InvoiceSystem(QMainWindow, user_sale.Ui_mainWindow):  # 继承自Ui_mainWi
 
         self.saleinfo_research()
         salelist = SaleFuc.selectSale()
+        if salelist is None:
+            salelist = []
         self.date_sale.setText(time.strftime("%Y-%m-%d", time.localtime()))
         self.order_id_sale.setText("S" + str(int(time.strftime("%Y%m0000", time.localtime())) + len(salelist) + 1))
 
@@ -223,10 +258,6 @@ class InvoiceSystem(QMainWindow, user_sale.Ui_mainWindow):  # 继承自Ui_mainWi
         if cuscutomerlist is None:
             QMessageBox.warning(self, '警告', '顾客列表为空，请先添加顾客再试！', QMessageBox.Yes)
             return None
-        self.dlg.table_customer.horizontalHeader().setStyleSheet("""QHeaderView::section {background-color:#008CBA ; /* 蓝色 */
-                                                                color: WHITE;
-                                                                };
-                                                                text-align : center;""")
         self.dlg = customerinfo_win.win()
         for item in cuscutomerlist:
             if item.getisdelete() == 1:  #
@@ -320,8 +351,7 @@ class InvoiceSystem(QMainWindow, user_sale.Ui_mainWindow):  # 继承自Ui_mainWi
     def saleinfo_research(self):
         salelist = SaleFuc.selectSale()
         if salelist is None:
-            QMessageBox.warning(self, '警告', '销售单列表为空！', QMessageBox.Yes)
-            return None
+            salelist = []
         self.table_saleinfo.setRowCount(len(salelist))  # 设置表格行数
         for index, item in enumerate(salelist, 0):
             butinfo_temp = QPushButton("详情")
@@ -470,16 +500,22 @@ class InvoiceSystem(QMainWindow, user_sale.Ui_mainWindow):  # 继承自Ui_mainWi
         self.table_sale.setItem(cur_row_count - 1, 6, QTableWidgetItem(good.getPrice_sell()))  # 总金额
         self.table_sale.setCellWidget(cur_row_count - 1, 7, widget)  # 删除按钮
 
-        QMessageBox.information(self.dlg, '提醒', '商品\"' + good.get_GoodsName() + "\"添加成功！", QMessageBox.Yes)
+        QMessageBox.information(self, '提醒', '商品\"' + good.get_GoodsName() + "\"添加成功！", QMessageBox.Yes)
 
     # 销售——修改商品数量（已做完）
     def sale_setgoodsnum(self):
         source = self.sender()
         if source:
-            goodsid = source.goodsid
+            goods = GoodsFuc.selectGoodsByGoodsId(source.goodsid)[0]
             for row in range(self.table_sale.rowCount()):
-                if self.table_sale.item(row, 0).text() == goodsid:
+                if self.table_sale.item(row, 0).text() == goods.getGoods_id():
                     num = source.value()
+                    if num > goods.getGoods_number():
+                        QMessageBox.information(self, '提醒',
+                                                "您设置的销售数量(%s%s)超过了商品\"%s\"当前的库存数量(%s%s)，如果继续销售则系统会自动生成暂存订货单提交至采购部门。" % (
+                                                    num, goods.get_GoodsUnit(), goods.get_GoodsName(),
+                                                    goods.getGoods_number(), goods.get_GoodsUnit()),
+                                                QMessageBox.Yes)
                     sell = int(self.table_sale.item(row, 5).text())
                     self.table_sale.setItem(row, 6, QTableWidgetItem(str(num * sell)))  #
                     break

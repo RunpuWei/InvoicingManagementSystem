@@ -26,6 +26,7 @@ def selectSale():
     for item in result:
         sale_id, account_id, customer_id, sale_date = item
         sale.append(Sale(sale_id, account_id, customer_id, sale_date))
+    if sale is None: sale = []
     return sale
 
 
@@ -41,6 +42,7 @@ def selectSaleBySaleId(sale_id):
     for item in result:
         sale_id, account_id, customer_id, goods_id, sale_date, sale_number, sale_left, sale_flag = item
         sale.append(Sale(sale_id, account_id, customer_id, sale_date, goods_id, sale_number, sale_left, sale_flag))
+    if sale is None: sale = []
     return sale
 
 
@@ -57,7 +59,7 @@ def updateSale_outNumber(sale):
 
 
 # 通过keywords查找销售单信息
-def selectSaleByKeywords(sale_id,customer_id,date_before,date_after):
+def selectSaleByKeywords(sale_id, customer_id, date_before, date_after):
     key = f"sale_id,account_id,customer_id,sale_date"
     where = f"sale_id LIKE '%{sale_id}%' AND Customer_id LIKE '%{customer_id}%' AND sale_date BETWEEN '{date_before}' AND '{date_after}' "
     sql = "SELECT DISTINCT {key} FROM {table} WHERE {where}".format(table="tb_sale", key=key, where=where)
@@ -68,8 +70,9 @@ def selectSaleByKeywords(sale_id,customer_id,date_before,date_after):
     if result is None:
         return None
     for item in result:
-        sale_id,account_id,customer_id,sale_date = item
-        sale.append(Sale(sale_id,account_id,customer_id,sale_date))
+        sale_id, account_id, customer_id, sale_date = item
+        sale.append(Sale(sale_id, account_id, customer_id, sale_date))
+    if sale is None: sale = []
     return sale
 
 
@@ -78,4 +81,4 @@ if __name__ == "__main__":
     # selectSale()
     # selectSaleBySaleId(2021010001)
     # updateSale_outNumber(Sale(sale_id="2021010001",goods_id="P0003GI",sale_left="10",sale_flag="未出库数量：10"))
-    selectSaleByKeywords("2","5", "2021-4-30", "2021-5-20")
+    selectSaleByKeywords("2", "5", "2021-4-30", "2021-5-20")

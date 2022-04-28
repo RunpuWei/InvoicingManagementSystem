@@ -1,9 +1,10 @@
 import sys
 
-from PyQt5 import QtWidgets, QtCore
+from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
+# from QCandyUi import CandyWindow
 
 from UI import login
 from func.ManagerFuc import selectManagerByAccount
@@ -15,6 +16,8 @@ import user.warehouse_win as warehouse
 class Login(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
+        self.ui1 = None
+        self.MainWindow = None
         self.ui = login.Ui_MainWindow()
         self.ui.setupUi(self)
 
@@ -89,6 +92,8 @@ class Login(QMainWindow):
                         self.MainWindow = QtWidgets.QMainWindow()
                         self.ui1 = sale.InvoiceSystem(self.MainWindow, manage[0])
                         self.ui1.exit.triggered.connect(self.BackLoginSlot)
+                        # self.MainWindow = CandyWindow.createWindow(self.MainWindow, 'blueDeep',"销售部门",QtGui.QPixmap(":/img/resource/sale_icon.png"))
+                        # self.MainWindow.setSupportStretch(False)
                         self.MainWindow.show()
                         self.close()
                     else:
@@ -100,6 +105,8 @@ class Login(QMainWindow):
                         self.MainWindow = QtWidgets.QMainWindow()
                         self.ui1 = warehouse.InvoiceSystem(self.MainWindow, manage[0])
                         self.ui1.exit.triggered.connect(self.BackLoginSlot)
+                        # self.MainWindow = CandyWindow.createWindow(self.MainWindow, 'blueDeep',"仓库部门",QtGui.QPixmap(":/img/resource/warehouse_icon.png"))
+                        # self.MainWindow.setSupportStretch(False)
                         self.MainWindow.show()
                         self.close()
                     else:
@@ -111,6 +118,8 @@ class Login(QMainWindow):
                         self.MainWindow = QtWidgets.QMainWindow()
                         self.ui1 = purchasing.InvoiceSystem(self.MainWindow, manage[0])
                         self.ui1.exit.triggered.connect(self.BackLoginSlot)
+                        # self.MainWindow = CandyWindow.createWindow(self.MainWindow, 'blueDeep',"采购部门",QtGui.QPixmap(":/img/resource/purchase_icon.png"))
+                        # self.MainWindow.setSupportStretch(False)
                         self.MainWindow.show()
                         self.close()
                     else:

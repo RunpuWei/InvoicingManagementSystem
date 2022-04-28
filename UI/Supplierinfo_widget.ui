@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1021</width>
-    <height>688</height>
+    <height>702</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -69,6 +69,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="search">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
           <property name="text">
            <string>搜索</string>
           </property>
